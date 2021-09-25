@@ -1,13 +1,14 @@
+import Deck from '@deck/entities/Deck';
 import DeckRepository from '@deck/interfaces/DeckRepository';
 
 export default class DeckMemoryRepository implements DeckRepository {
-  decks: any[];
+  decks: Deck[] = [];
 
-  public constructor() {
-    this.decks = [];
+  save(deck: Deck): void {
+    this.decks.push(deck);
   }
 
-  save(deck: any): void {
-    throw new Error('Method not implemented.');
+  load(deckId: string): Deck {
+    return this.decks.find((deck) => deck.deckId === deckId);
   }
 }

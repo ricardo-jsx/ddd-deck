@@ -38,7 +38,7 @@ export default class Card {
   readonly suit: Suit;
   readonly code: string;
 
-  public constructor(rank: Rank, suit: Suit, code: string) {
+  private constructor(rank: Rank, suit: Suit, code: string) {
     this.rank = rank;
     this.suit = suit;
     this.code = code;

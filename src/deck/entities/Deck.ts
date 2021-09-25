@@ -10,20 +10,24 @@ export default abstract class Deck {
   readonly deckId: string;
   readonly type: DeckType;
   readonly shuffled: boolean;
-  readonly remaining: number;
-  protected cards: Card[];
+  protected cards: Card[] = [];
+  protected remaining = 0;
 
-  constructor(requestedDeck: RequestedDeckDto) {
+  protected constructor(requestedDeck: RequestedDeckDto) {
     this.deckId = uuidV4();
     this.type = requestedDeck.type;
     this.shuffled = requestedDeck.shuffled;
-
-    this.createCards();
-
-    this.remaining = this.cards.length;
   }
 
-  public abstract createCards(): void;
+  public getRemaining() {
+    return this.remaining;
+  }
+
+  public getRemainingCards(): Card[] {
+    return this.cards;
+  }
+
+  public abstract addCards(): void;
 
   public abstract shuffle(shuffle: Shuffle<Card>): void;
 }

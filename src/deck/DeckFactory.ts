@@ -14,7 +14,9 @@ export default class DeckFactory {
   }
 
   private static createShortDeck(requestedDeck: RequestedDeckDto): Deck {
-    const shortDeck = new ShortDeck(requestedDeck);
+    const shortDeck = ShortDeck.createDeck(requestedDeck);
+
+    shortDeck.addCards();
 
     if (requestedDeck.shuffled) shortDeck.shuffle(knuthShuffle);
 
@@ -22,7 +24,9 @@ export default class DeckFactory {
   }
 
   private static createFullDeck(requestedDeck: RequestedDeckDto): Deck {
-    const fullDeck = new FullDeck(requestedDeck);
+    const fullDeck = FullDeck.createDeck(requestedDeck);
+
+    fullDeck.addCards();
 
     if (requestedDeck.shuffled) fullDeck.shuffle(knuthShuffle);
 

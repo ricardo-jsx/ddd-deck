@@ -5,11 +5,11 @@ import Deck from './Deck';
 import Card, { SUITS, RANKS } from './Card';
 
 export default class FullDeck extends Deck {
-  public constructor(requestedDeck: RequestedDeckDto) {
-    super(requestedDeck);
+  public static createDeck(requestedDeck: RequestedDeckDto) {
+    return new FullDeck(requestedDeck);
   }
 
-  public createCards(): void {
+  public addCards(): void {
     this.cards = [];
 
     for (let i = 0; i < SUITS.length; i++) {
@@ -18,6 +18,8 @@ export default class FullDeck extends Deck {
         this.cards.push(card);
       }
     }
+
+    this.remaining = this.cards.length;
   }
 
   public shuffle(shuffle: Shuffle<Card>): void {
