@@ -1,13 +1,19 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import DeckService from '@deck/application/deck.service';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+
+import RequestedDeckDto from '@deck/dto/requested-deck.dto';
+import CreatedDeckResponseDto from '@deck/dto/created-deck.response.dto';
+
+import DeckService from './deck.service';
 
 @Controller('api/v1/deck')
 export default class DeckController {
   constructor(private readonly deckService: DeckService) {}
 
   @Post('create')
-  create(): string {
-    return this.deckService.getHello();
+  create(@Body() createDeckDto: RequestedDeckDto): CreatedDeckResponseDto {
+    const deck = this.deckService.createDeck(createDeckDto);
+
+    return CreatedDeckResponseDto.parse(deck);
   }
 
   @Get('open')

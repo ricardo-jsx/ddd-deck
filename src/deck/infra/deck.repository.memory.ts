@@ -1,4 +1,4 @@
-import DeckRepository from '@deck/domain/deck.repository';
+import DeckRepository from '@deck/interfaces/DeckRepository';
 
 export default class DeckMemoryRepository implements DeckRepository {
   decks: any[];
