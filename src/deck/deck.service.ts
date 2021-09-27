@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import DeckRepository from '@deck/interfaces/DeckRepository';
+import { DeckRepository } from '@deck/interfaces/GenericRepository';
 import RequestedDeckDto from '@deck/dto/requested-deck.dto';
 import DeckMemoryRepository from '@deck/infra/deck.repository.memory';
 import Deck from '@deck/entities/Deck';

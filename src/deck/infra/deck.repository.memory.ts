@@ -1,20 +1,20 @@
 import Deck from '@deck/entities/Deck';
-import DeckRepository from '@deck/interfaces/DeckRepository';
+import { DeckRepository } from '@deck/interfaces/GenericRepository';
 
 export default class DeckMemoryRepository implements DeckRepository {
-  decks: Deck[] = [];
+  data: Deck[] = [];
 
   save(deck: Deck): void {
-    this.decks.push(deck);
+    this.data.push(deck);
   }
 
   load(deckId: string): Deck {
-    return this.decks.find((deck) => deck.deckId === deckId);
+    return this.data.find((deck) => deck.deckId === deckId);
   }
 
   update(deckId: string, updateDeck: Deck): void {
-    const decks = this.decks.map((deck) => (deck.deckId === deckId ? updateDeck : deck));
+    const decks = this.data.map((deck) => (deck.deckId === deckId ? updateDeck : deck));
 
-    this.decks = decks;
+    this.data = decks;
   }
 }

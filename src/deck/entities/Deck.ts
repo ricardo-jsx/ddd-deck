@@ -29,6 +29,8 @@ export default abstract class Deck {
   }
 
   public drawCard(): Card[] {
+    if (this.cards.length === 0) return this.drawCards;
+
     const cards = [...this.cards];
     const drawCard = cards.pop();
 
