@@ -1,8 +1,8 @@
 {
   "name": "ddd-deck",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "API to handle decks and cards to be used in games like Poker and Blackjack",
+  "author": "Ricardo Brambila",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
