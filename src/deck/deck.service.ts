@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 import { DeckRepository } from '@deck/interfaces/GenericRepository';
 import RequestedDeckDto from '@deck/dto/requested-deck.dto';
+import DrawCardsDto from '@deck/dto/draw-cards.dto';
 import DeckMemoryRepository from '@deck/infra/deck.repository.memory';
 import Deck from '@deck/entities/Deck';
-import Card from '@deck/entities/Card';
+import Hand from '@deck/entities/Hand';
+import DeckErrorCode from '@deck/enum/deck-error-code';
 
 import DeckFactory from './DeckFactory';
 
@@ -16,26 +18,29 @@ export default class DeckService {
     this.db = new DeckMemoryRepository();
   }
 
-  getHello(json?: any): string {
-    return 'Hello World!' + JSON.stringify(json || {}, null, 2);
-  }
-
   createDeck(requestedDeck: RequestedDeckDto): Deck {
     const deck = DeckFactory.createDeck(requestedDeck);
     this.db.save(deck);
     return deck;
   }
 
-  openDeck(deckId: string): Deck {
-    return this.db.load(deckId);
-  }
-
-  drawCards(deckId: string): Card[] {
+  openDeck(deckId: string): Deck | DeckErrorCode {
     const deck = this.db.load(deckId);
 
-    const drawCards = deck.drawCard();
-    this.db.update(deckId, deck);
+    if (!deck) return DeckErrorCode.DECK_NOT_FOUND;
 
-    return drawCards;
+    return deck;
+  }
+
+  drawCards(drawCardsDto: DrawCardsDto): Hand | DeckErrorCode {
+    const deck = this.db.load(drawCardsDto.deckId);
+
+    if (!deck) return DeckErrorCode.DECK_NOT_FOUND;
+
+    const currentHand = deck.drawCard(drawCardsDto.amount);
+
+    this.db.update(drawCardsDto.deckId, deck);
+
+    return currentHand;
   }
 }

@@ -1,13 +1,9 @@
-import Card from '@deck/entities/Card';
+import { IsUUID, Min } from 'class-validator';
 
 export default class DrawCardsDto {
-  readonly cards: Card[];
+  @IsUUID('4')
+  readonly deckId: string;
 
-  private constructor(props: DrawCardsDto) {
-    Object.assign(this, props);
-  }
-
-  public static parse(cards: Card[]): DrawCardsDto {
-    return new DrawCardsDto({ cards });
-  }
+  @Min(1, { message: 'Amount must be at least 1' })
+  readonly amount: number;
 }

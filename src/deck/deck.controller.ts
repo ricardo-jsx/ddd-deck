@@ -1,12 +1,15 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
 
 import RequestedDeckDto from '@deck/dto/requested-deck.dto';
 import CreatedDeckDto from '@deck/dto/created-deck.dto';
 import RecoveredDeckDto from '@deck/dto/recovered-deck.dto';
+import DrawCardsDto from '@deck/dto/draw-cards.dto';
+import FindDeckParams from '@deck/dto/find-deck-params.dto';
+import HandDto from '@deck/dto/hand.dto';
+import Deck from '@deck/entities/Deck';
+import Hand from '@deck/entities/Hand';
 
 import DeckService from './deck.service';
-import FindDeckParams from './dto/find-deck-params.dto';
-import DrawCardsDto from './dto/draw-cards.dto';
 
 @Controller('api/v1/deck')
 export default class DeckController {
@@ -23,13 +26,18 @@ export default class DeckController {
   open(@Param() params: FindDeckParams): RecoveredDeckDto {
     const deck = this.deckService.openDeck(params.deckId);
 
-    return RecoveredDeckDto.parse(deck);
+    if (deck instanceof Deck) return RecoveredDeckDto.parse(deck);
+
+    throw new HttpException('Deck not found', HttpStatus.NOT_FOUND);
   }
 
-  @Post('draw/:deckId')
-  draw(@Param() params: FindDeckParams): DrawCardsDto {
-    const cards = this.deckService.drawCards(params.deckId);
+  @Post('draw')
+  @HttpCode(200)
+  draw(@Body() drawCardsDto: DrawCardsDto): HandDto {
+    const hand = this.deckService.drawCards(drawCardsDto);
 
-    return DrawCardsDto.parse(cards);
+    if (hand instanceof Hand) return HandDto.parse(hand);
+
+    throw new HttpException('Deck not found', HttpStatus.NOT_FOUND);
   }
 }

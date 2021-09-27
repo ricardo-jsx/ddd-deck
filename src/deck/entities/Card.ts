@@ -1,35 +1,8 @@
 type Suit = 'SPADES' | 'HEARTS' | 'CLUBS' | 'DIAMONDS';
 
-type Rank =
-  | 'ACE'
-  | '2'
-  | '3'
-  | '4'
-  | '5'
-  | '6'
-  | '7'
-  | '8'
-  | '9'
-  | '10'
-  | 'JACK'
-  | 'QUEEN'
-  | 'KING';
+type Rank = 'ACE' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | 'JACK' | 'QUEEN' | 'KING';
 
-export const RANKS: Rank[] = [
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  'JACK',
-  'QUEEN',
-  'KING',
-  'ACE',
-];
+export const RANKS: Rank[] = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'JACK', 'QUEEN', 'KING', 'ACE'];
 
 export const SUITS: Suit[] = ['CLUBS', 'DIAMONDS', 'HEARTS', 'SPADES'];
 

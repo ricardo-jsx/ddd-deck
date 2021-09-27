@@ -5,19 +5,20 @@ import DeckType from '@deck/enum/deck-type.enum';
 import Shuffle from '@deck/interfaces/Shuffle';
 
 import Card from './Card';
+import Hand from './Hand';
 
 export default abstract class Deck {
   readonly deckId: string;
   readonly type: DeckType;
   readonly shuffled: boolean;
-  readonly remaining = 0;
+  readonly hand: Hand;
   protected cards: Card[] = [];
-  protected drawCards: Card[] = [];
 
-  protected constructor(requestedDeck: RequestedDeckDto) {
+  protected constructor(readonly requestedDeck: RequestedDeckDto) {
     this.deckId = uuidV4();
     this.type = requestedDeck.type;
     this.shuffled = requestedDeck.shuffled;
+    this.hand = new Hand();
   }
 
   public getRemaining(): number {
@@ -28,16 +29,13 @@ export default abstract class Deck {
     return this.cards;
   }
 
-  public drawCard(): Card[] {
-    if (this.cards.length === 0) return this.drawCards;
+  public drawCard(amount: number): Hand {
+    const drawCards = this.cards.slice(-amount);
 
-    const cards = [...this.cards];
-    const drawCard = cards.pop();
+    this.hand.addCards(drawCards);
+    this.cards.length = this.cards.length - drawCards.length;
 
-    this.drawCards.push(drawCard);
-    this.cards = cards;
-
-    return this.drawCards;
+    return this.hand;
   }
 
   public abstract addCards(): void;
