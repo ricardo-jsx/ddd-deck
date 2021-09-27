@@ -5,7 +5,8 @@ import CreatedDeckDto from '@deck/dto/created-deck.dto';
 import RecoveredDeckDto from '@deck/dto/recovered-deck.dto';
 
 import DeckService from './deck.service';
-import OpenDeckParamsDto from './dto/open-deck-params.dto';
+import FindDeckParams from './dto/find-deck-params.dto';
+import DrawCardsDto from './dto/draw-cards.dto';
 
 @Controller('api/v1/deck')
 export default class DeckController {
@@ -19,14 +20,16 @@ export default class DeckController {
   }
 
   @Get('open/:deckId')
-  open(@Param() params: OpenDeckParamsDto): RecoveredDeckDto {
+  open(@Param() params: FindDeckParams): RecoveredDeckDto {
     const deck = this.deckService.openDeck(params.deckId);
 
     return RecoveredDeckDto.parse(deck);
   }
 
-  @Post('draw')
-  getHello(): string {
-    return this.deckService.getHello();
+  @Post('draw/:deckId')
+  draw(@Param() params: FindDeckParams): DrawCardsDto {
+    const cards = this.deckService.drawCards(params.deckId);
+
+    return DrawCardsDto.parse(cards);
   }
 }

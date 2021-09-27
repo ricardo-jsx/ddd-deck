@@ -18,8 +18,6 @@ export default class ShortDeck extends Deck {
         this.cards.push(card);
       }
     }
-
-    this.remaining = this.cards.length;
   }
 
   public shuffle(shuffle: Shuffle<Card>): void {

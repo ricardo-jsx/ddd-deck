@@ -1,7 +1,7 @@
 import { v4 as uuidV4 } from 'uuid';
 
 import RequestedDeckDto from '@deck/dto/requested-deck.dto';
-import DeckType from '@deck/domain/deck-type.enum';
+import DeckType from '@deck/enum/deck-type.enum';
 import Shuffle from '@deck/interfaces/Shuffle';
 
 import Card from './Card';
@@ -10,8 +10,9 @@ export default abstract class Deck {
   readonly deckId: string;
   readonly type: DeckType;
   readonly shuffled: boolean;
+  readonly remaining = 0;
   protected cards: Card[] = [];
-  protected remaining = 0;
+  protected drawCards: Card[] = [];
 
   protected constructor(requestedDeck: RequestedDeckDto) {
     this.deckId = uuidV4();
@@ -19,12 +20,22 @@ export default abstract class Deck {
     this.shuffled = requestedDeck.shuffled;
   }
 
-  public getRemaining() {
-    return this.remaining;
+  public getRemaining(): number {
+    return this.cards.length;
   }
 
   public getRemainingCards(): Card[] {
     return this.cards;
+  }
+
+  public drawCard(): Card[] {
+    const cards = [...this.cards];
+    const drawCard = cards.pop();
+
+    this.drawCards.push(drawCard);
+    this.cards = cards;
+
+    return this.drawCards;
   }
 
   public abstract addCards(): void;

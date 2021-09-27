@@ -1,4 +1,4 @@
-import DeckType from '@deck/domain/deck-type.enum';
+import DeckType from '@deck/enum/deck-type.enum';
 import Deck from '@deck/entities/Deck';
 
 export default class CreatedDeckDto {
@@ -7,7 +7,7 @@ export default class CreatedDeckDto {
   readonly shuffled: boolean;
   readonly remaining: number;
 
-  constructor(props: CreatedDeckDto) {
+  private constructor(props: CreatedDeckDto) {
     Object.assign(this, props);
   }
 

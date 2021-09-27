@@ -11,4 +11,10 @@ export default class DeckMemoryRepository implements DeckRepository {
   load(deckId: string): Deck {
     return this.decks.find((deck) => deck.deckId === deckId);
   }
+
+  update(deckId: string, updateDeck: Deck): void {
+    const decks = this.decks.map((deck) => (deck.deckId === deckId ? updateDeck : deck));
+
+    this.decks = decks;
+  }
 }

@@ -1,4 +1,4 @@
-import DeckType from '@deck/domain/deck-type.enum';
+import DeckType from '@deck/enum/deck-type.enum';
 import Card from '@deck/entities/Card';
 import Deck from '@deck/entities/Deck';
 

@@ -1,5 +1,5 @@
 import RequestedDeckDto from '@deck/dto/requested-deck.dto';
-import DeckType from '@deck/domain/deck-type.enum';
+import DeckType from '@deck/enum/deck-type.enum';
 import Deck from '@deck/entities/Deck';
 import ShortDeck from '@deck/entities/ShortDeck';
 import FullDeck from '@deck/entities/FullDeck';
@@ -7,8 +7,7 @@ import knuthShuffle from '@deck/helpers/knuth-shuffle';
 
 export default class DeckFactory {
   public static createDeck(requestedDeck: RequestedDeckDto) {
-    if (requestedDeck.type === DeckType.SHORT)
-      return this.createShortDeck(requestedDeck);
+    if (requestedDeck.type === DeckType.SHORT) return this.createShortDeck(requestedDeck);
 
     return this.createFullDeck(requestedDeck);
   }
